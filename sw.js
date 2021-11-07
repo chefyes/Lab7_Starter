@@ -9,23 +9,13 @@ self.addEventListener('install', function (event) {
    * TODO - Part 2 Step 2
    * Create a function as outlined above
    */
-   var CACHE_NAME = 'my-site-cache-v1';
-   var urlsToCache = [
-     '/',
-     'assets/styles/main.css',
-     'assets/script/main.js'
-   ];
-
-   self.addEventListener('install', function(event) {
-     // Perform install steps
-     event.waitUntil(
-       caches.open(CACHE_NAME)
-         .then(function(cache) {
-           console.log('Opened cache');
-           return cache.addAll(urlsToCache);
-         })
-     );
-   });
+   event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(function(cache) {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+      })
+  );
 });
 
 /**
