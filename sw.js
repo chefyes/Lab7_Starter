@@ -3,13 +3,13 @@
 
 const CACHE_NAME = 'lab-7-starter';
 const urlsToCache = [
-  './',
-  './assets/images/',
-  './assets/scripts/main.js',
-  './assets/scripts/Router.js',
-  './assets/styles/main.css',
-  './assets/components/RecipeCard.js',
-  './assets/components/RecipeExpand.js'
+  '/',
+  '/assets/images/',
+  '/assets/scripts/main.js',
+  '/assets/scripts/Router.js',
+  '/assets/styles/main.css',
+  '/assets/components/RecipeCard.js',
+  '/assets/components/RecipeExpand.js'
 ];
 
 self.addEventListener('install', function(event) {
@@ -37,36 +37,13 @@ self.addEventListener('activate', function (event) {
 });
 
 // Intercept fetch requests and store them in the cache
-self.addEventListener('fetch', function (event) {
-  /**
-   * TODO - Part 2 Step 4
-   * Create a function as outlined above
-   */
+self.addEventListener('fetch', function(event) {
   event.respondWith(
-    caches.match(event.request)
-      .then(function(response) {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-
-        return fetch(event.request).then(
-          function(response) {
-            // Check if we received a valid response
-            if(!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-
-            var responseToCache = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then(function(cache) {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
-          }
-        );
-      })
-    );
+    caches.match(event.request).then(function(response) {
+      if (response) {
+        return response;
+      }
+      return fetch(event.request);
+    })
+  )
 });
